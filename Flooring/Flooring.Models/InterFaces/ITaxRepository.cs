@@ -9,6 +9,7 @@ namespace Flooring.Models.InterFaces
     public interface ITaxRepository  
     {
         Tax LoadTaxObject(string StateName);
-        void SaveTax(Tax tax);
+        void SaveNewTax(Tax tax);
+        List<Tax> TaxList();
     }
 }

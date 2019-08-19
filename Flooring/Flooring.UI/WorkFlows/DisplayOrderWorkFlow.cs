@@ -17,18 +17,26 @@ namespace Flooring.UI.WorkFlows
             Console.Clear();
             Console.WriteLine("Look up an order using the order date.");
             Console.WriteLine("____________________________________");
-            Console.WriteLine("Enter order date here: ");
+            Console.Write("Enter order date here: ");
             string orderDate = Console.ReadLine();
+            
+            Console.Write("Enter order number here: ");
+            string userNumber = Console.ReadLine();
+            int.TryParse(userNumber, out int orderNumber);
 
-            DisplayOrderResponse response = manager.DisplayOrder(orderDate);
+            Response response = new Response();
+
+               response =  manager.DisplayOrder( orderDate, orderNumber);
 
             if (response.Success)
             {
-                ConsoleIO.DisplayOrderInformation(response.OrderDate);
+                ConsoleIO.DisplayOrderInformation(response.Order);
             }
+
+            // maybe make order a field in the response?
             else
             {
-                Console.WriteLine("That order does not exist");
+                Console.WriteLine(response.Message);
             }
         }
     }

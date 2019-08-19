@@ -1,0 +1,5 @@
+OrderNumber, CustomerName, State, TaxRate, ProductType, Area, CostPerSquareFoot, LacorCostPerSquareFoot, MaterialCost, LaborCost, Tax, Total
+1,Angela,Ohio,6.25,Carpet,300,2.25,2.10,675.00,630.00,81.562500,1386.562500
+2,Dwight,Ohio,6.25,Laminate,300,1.75,2.10,525.00,630.00,72.187500,1227.187500
+4,Pam,Ohio,6.25,Wood,300,5.15,4.75,1545.00,1425.00,185.625000,3155.625000
+5,Melissa,Ohio,6.25,Tile,700,3.50,4.15,2450.00,2905.00,334.687500,5689.687500

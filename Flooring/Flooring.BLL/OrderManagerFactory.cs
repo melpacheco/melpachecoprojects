@@ -17,9 +17,9 @@ namespace Flooring.BLL
             switch (mode)
             {
                 case "Test":
-                    return new OrderManager(new TestOrderRepository(), new TestProductRepository(), new TestTaxRepository());
+                    return new OrderManager(new TestOrderRepository(), new TestTaxRepository(), new TestProductRepository());
                 case "Live":
-                    return new OrderManager(new ProdOrderRepository(), new ProdProductRepository(), new ProdTaxRepository());
+                    return new OrderManager(new ProdOrderRepository(), new ProdTaxRepository(), new ProdProductRepository());
                 default:
                     throw new Exception("Mode does not exist.");
             }

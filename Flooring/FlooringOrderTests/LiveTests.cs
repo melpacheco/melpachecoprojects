@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Flooring.Models.Responses
+namespace FlooringOrderTests
 {
-   public class DisplayOrderResponse : Response
+    public class LiveTests
     {
-         public Order OrderDate { get; set; }
     }
 }

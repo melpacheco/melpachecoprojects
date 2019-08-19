@@ -4,20 +4,23 @@ using Flooring.Models.InterFaces;
 using Flooring.Models.Responses;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Flooring.BLL
 {
-    public class AddOrderRules 
+    public class AddOrderRules
     {
-        public AddOrderResponse AddOrder(Order order, Product product, Tax tax)
+        public Response AddOrder(Order order, Product product, Tax tax)
         {
+            Response response = new Response();
+            response.Order = new Order();
            
-            AddOrderResponse response = new AddOrderResponse();
+            
 
-           if (order.Area < 0)
+            if (order.Area < 0)
             {
                 response.Success = false;
                 response.Message = "Area must be greater than 0";
@@ -32,21 +35,23 @@ namespace Flooring.BLL
             }
 
             response.Success = true;
-            response.OrderDate = order.OrderDate;
-            //response.OrderNumber = AssignOrderNumber()
-            response.CustomerName = order.CustomerName;
-            response.State = tax.StateName;
-            response.TaxRate = tax.TaxRate;
-            response.ProductType = product.ProductType;
-            response.Area = order.Area;
-            response.CostPerSquareFoot = product.CostPerSquareFoot;
-            response.LaborCostPerSquareFoot = product.LaborCostPerSquareFoot;
-            response.MaterialCost = response.Area * response.CostPerSquareFoot;
-            response.LaborCost = response.Area * response.LaborCostPerSquareFoot;
-            response.Tax = (response.MaterialCost + response.LaborCost) * (response.TaxRate / 100);
-            response.Total = response.MaterialCost + response.LaborCost + response.Tax;
+
+            response.Order.OrderDate = order.OrderDate;
+            response.Order.CustomerName = order.CustomerName;
+            response.Order.ProductType = order.ProductType;
+            response.Order.State = order.State;
+            response.Order.TaxRate = tax.TaxRate;
+            response.Order.Area = order.Area;
+            response.Order.CostPerSquareFoot = product.CostPerSquareFoot;
+            response.Order.LaborCostPerSquareFoot = product.LaborCostPerSquareFoot;
+            response.Order.MaterialCost = order.Area * product.CostPerSquareFoot;
+            response.Order.LaborCost = order.Area * product.LaborCostPerSquareFoot;
+            response.Order.Tax = (response.Order.MaterialCost + response.Order.LaborCost) * (tax.TaxRate / 100);
+            response.Order.Total = response.Order.MaterialCost + response.Order.LaborCost + response.Order.Tax;
             return response;
+
         }
+
 
         public Order LoadOrder(string OrderNumber)
         {
@@ -58,12 +63,11 @@ namespace Flooring.BLL
             throw new NotImplementedException();
         }
 
-     
-
         public List<Order> LoadList()
         {
             throw new NotImplementedException();
         }
+
     }
-    }
+}
 

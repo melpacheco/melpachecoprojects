@@ -12,22 +12,26 @@ namespace Flooring.Data
     {
 
 
-        public static List<Tax> taxList = new List<Tax>
+        public List<Tax> TaxList()
         {
-            new Tax {StateName = "Ohio", StateAbbreviation = "OH", TaxRate = 6.25M}
-        };
+            List<Tax> TaxList = new List<Tax>();
+
+            TaxList.Add(new Tax { StateName = "Ohio", StateAbbreviation = "OH", TaxRate = 6.25M });
+
+            return TaxList;
+        }
 
         public Tax LoadTaxObject(string StateName)
         {
          
-            var TaxObject = taxList.Where(p => p.StateName == StateName);
+            var TaxObject = TaxList().Where(p => p.StateName == StateName);
 
             return TaxObject.FirstOrDefault();
         }
 
-        public void SaveTax(Tax tax)
+        public void SaveNewTax(Tax tax)
         {
-            taxList.Add(tax);
+            TaxList().Add(tax);
         }
     }
 }
