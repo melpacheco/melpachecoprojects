@@ -10,11 +10,17 @@ using System.Threading.Tasks;
 
 namespace Flooring.Data
 {
-    public class ProdOrderRepository : IOrderRepository
+    public class ProdOrderRepository :IOrderRepository
+        
     {
-        private static List<Order> _OrderList;
-       
+        private static string _path;
 
+        public ProdOrderRepository(string path)
+        {
+            _path = path;
+        }
+         private static List<Order> _OrderList;
+       
         public Response RemoveOrder(Order order)
         {
             _OrderList = LoadList(order.OrderDate);
@@ -30,9 +36,6 @@ namespace Flooring.Data
         {
 
             LoadList(order.OrderDate);
-            //int OrderNumber = _OrderList.Count();
-            //order.OrderNumber = OrderNumber++.ToString();
-            // NEED TO PUT ORDERNUMBERMETHOD HERE
             _OrderList.Add(order);
             WriteFile(_OrderList, order.OrderDate);
         }
@@ -41,13 +44,14 @@ namespace Flooring.Data
         {
             DateTime date = DateTime.Parse(OrderDate);
 
-            string path = $"C:\\Users\\MelPacheco\\Documents\\SoftWareGuildAssignments\\melissa-pacheco-individual-work\\online-net-melpacheco\\Flooring\\FlooringOrders\\Orders_{date.ToString("MMddyyyy")}.txt";
-            if (!File.Exists(path))
+            string NewPath = (_path)+(date.ToString("MMddyyyy")) + ".txt";
+
+            if (!File.Exists(NewPath))
             {
-                File.Create(path).Dispose();
+                File.Create(NewPath).Dispose();
             }
 
-            using (TextWriter write = new StreamWriter(path))
+            using (TextWriter write = new StreamWriter(NewPath))
             {
                 write.WriteLine("OrderNumber, CustomerName, State, TaxRate, ProductType, Area, CostPerSquareFoot, LacorCostPerSquareFoot, MaterialCost, LaborCost, Tax, Total");
                 foreach (var s in _OrderList)
@@ -63,13 +67,12 @@ namespace Flooring.Data
 
             DateTime date = DateTime.Parse(OrderDate);
 
-            string path = $"C:\\Users\\MelPacheco\\Documents\\SoftWareGuildAssignments\\melissa-pacheco-individual-work\\online-net-melpacheco\\Flooring\\FlooringOrders\\Orders_{date.ToString("MMddyyyy")}.txt";
-            List<Order> OrderList = new List<Order>();
-
+            string NewPath = (_path)+(date.ToString("MMddyyyy")) + ".txt"; 
+List<Order> OrderList = new List<Order>();
             
-            if (File.Exists(path))
+            if (File.Exists(NewPath))
             {
-                string[] rows = File.ReadAllLines(path);
+                string[] rows = File.ReadAllLines(NewPath);
 
                 for (int i = 1; i < rows.Length; i++)
                 {

@@ -23,10 +23,18 @@ namespace Flooring.Data
 
         public Tax LoadTaxObject(string StateName)
         {
-         
-            var TaxObject = TaxList().Where(p => p.StateName == StateName);
 
-            return TaxObject.FirstOrDefault();
+            List<Tax> newTaxList = new List<Tax>();
+            newTaxList = TaxList();
+            foreach (var x in newTaxList)
+            {
+                if (x.StateName.ToLower() == StateName.ToLower())
+                {
+                    return x;
+                }
+
+            }
+            return null;
         }
 
         public void SaveNewTax(Tax tax)

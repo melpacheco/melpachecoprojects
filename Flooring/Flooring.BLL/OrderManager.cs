@@ -41,8 +41,7 @@ namespace Flooring.BLL
             return ProductList;
         }
 
-        public Response DisplayOrder(string OrderDate, int orderNumber) //this works!!!
-                                                                           // I AM A FUCKING GENIUS
+        public Response DisplayOrder(string OrderDate, int orderNumber)
         {
             Response response = new Response();
 
@@ -67,8 +66,8 @@ namespace Flooring.BLL
             Product productObject = new Product();
 
 
-            taxObject = _taxRepository.LoadTaxObject(order.State);
-            productObject = _productRepository.LoadProduct(order.ProductType);
+            taxObject = _taxRepository.LoadTaxObject(order.State.ToLower());
+            productObject = _productRepository.LoadProduct(order.ProductType.ToLower());
 
             response = addOrderRules.AddOrder(order, productObject, taxObject);
             response.Order.OrderNumber = GetOrderNumber(order.OrderDate);
@@ -77,24 +76,6 @@ namespace Flooring.BLL
 
 
         }
-
-        public Response CheckStateTax(string state, List<Tax> TaxList)
-        {
-            Response response = new Response();
-            foreach (var p in TaxList)
-            {
-                if (p.StateName == state)
-                {
-                    response.Success = true;
-                    return response;
-                }
-
-            }
-            response.Success = false;
-            return response;
-        }
-
-
 
         public void SaveOrder(Order order)
         {
@@ -157,7 +138,7 @@ namespace Flooring.BLL
             Response response = new Response();
             foreach (var x in _taxRepository.TaxList())
             {
-                if (x.StateName == state)
+                if (x.StateName.ToLower() == state.ToLower())
                 {
                     response.Success = true;
                     return response;
@@ -165,6 +146,7 @@ namespace Flooring.BLL
             }
 
             response.Success = false;
+            response.Message = $"We are unable to sell in {state} at this time.";
             return response;
         }
 
@@ -186,7 +168,7 @@ namespace Flooring.BLL
                     List.Add(x.OrderNumber);
                 }
                 int number = List.Max();
-              
+
                 return ++number;
             }
         }
@@ -194,12 +176,20 @@ namespace Flooring.BLL
         public Response IsInFutureDate(string orderDate)
         {
             Response response = new Response();
+            response = ValidDate(orderDate);
+
+
+            if (response.Success == false)
+            {
+                return response;
+            }
+
             DateTime dateTime = DateTime.Parse(orderDate);
 
-            while (dateTime < DateTime.Today)
+            if (dateTime < DateTime.Today)
             {
                 response.Success = false;
-                Console.WriteLine("Order Date must be in the future");             
+                Console.WriteLine("Order Date must be in the future");
                 return response;
             }
 
@@ -213,27 +203,38 @@ namespace Flooring.BLL
 
             foreach (var x in ProductAvailability())
             {
-                if (x.ProductType == "ProductType")
+                if (x.ProductType.ToLower() == ProductType.ToLower())
                 {
                     response.Success = true;
                     return response;
                 }
 
                 response.Success = false;
-               
+
             }
             Console.WriteLine("You must choose from the products listed.");
             return response;
         }
 
-      //public Response IsValidOrderDate(string orderDate, int ordernumber)
-      //  {
-      //      Response response = new Response();
+        public Response ValidDate(string orderDate)
+        {
+            Response response = new Response();
 
-      //      response = _orderRepository.LoadOrder(orderDate, ordernumber);
+            DateTime Date = new DateTime();
 
-      //      return response;
-      //  }
+            if (DateTime.TryParse(orderDate, out Date))
+            {
+                response.Success = true;
+                return response;
+
+            }
+
+            response.Success = false;
+            response.Message = "Must enter valid date (DD/MM/YYYY) ";
+            return response;
+        }
+
+
     }
 }
 
@@ -242,5 +243,5 @@ namespace Flooring.BLL
 
 
 
-    
+
 

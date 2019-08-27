@@ -10,6 +10,8 @@ namespace Flooring.BLL
 {
     public class OrderManagerFactory
     {
+        private static string _path = $"C:\\Users\\MelPacheco\\Documents\\SoftWareGuildAssignments\\melissa-pacheco-individual-work\\online-net-melpacheco\\Flooring\\FlooringOrders\\Orders_";
+
         public static OrderManager Create()
         {
             string mode = ConfigurationManager.AppSettings["Mode"].ToString();
@@ -17,12 +19,16 @@ namespace Flooring.BLL
             switch (mode)
             {
                 case "Test":
-                    return new OrderManager(new TestOrderRepository(), new TestTaxRepository(), new TestProductRepository());
+                    return new OrderManager(new TestOrderRepository(_path), new TestTaxRepository(), new TestProductRepository());
                 case "Live":
-                    return new OrderManager(new ProdOrderRepository(), new ProdTaxRepository(), new ProdProductRepository());
+                    return new OrderManager(new ProdOrderRepository(_path), new ProdTaxRepository(), new ProdProductRepository());
                 default:
                     throw new Exception("Mode does not exist.");
             }
+
+            
         }
+
+ 
     }
 }

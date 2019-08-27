@@ -11,11 +11,7 @@ namespace Flooring.Data
 {
     public class ProdProductRepository : IProductRepository
     {
-        // WHAT AM I DOING?????
-
-    
-       
-
+      
 
         public  List<Product> ProductList()
         {
@@ -49,7 +45,7 @@ namespace Flooring.Data
 
         public Product LoadProduct(string ProductType)
         {
-            var Product = ProductList().Where(p => p.ProductType == ProductType);
+            var Product = ProductList().Where(p => p.ProductType.ToLower() == ProductType.ToLower());
 
             return Product.FirstOrDefault();
         }

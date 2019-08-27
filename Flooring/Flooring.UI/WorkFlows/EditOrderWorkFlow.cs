@@ -13,18 +13,18 @@ namespace Flooring.UI.WorkFlows
     {
         public void Execute()
         {
+            Response response = new Response();
             Response ToBeEditedOrder = new Response();
+            ToBeEditedOrder.Order = new Order();
             Response ProductValidation = new Response();
             OrderManager manager = OrderManagerFactory.Create();
             Response newOrder = new Response();
             newOrder.Order = new Order();
+            ConsoleIO console = new ConsoleIO();
 
-            Console.WriteLine("Enter the order date here: ");
-            string orderDate = Console.ReadLine();
+            string orderDate = console.GetOrderDate();
 
-            Console.WriteLine("Enter the order number here: ");
-            string userNumber = Console.ReadLine();
-            int.TryParse(userNumber, out int orderNumber);
+            int orderNumber = console.GetOrderNumber();
 
             ToBeEditedOrder = manager.LoadOrder(orderDate, orderNumber);
 
@@ -34,15 +34,21 @@ namespace Flooring.UI.WorkFlows
                 return;
             }
 
-            Console.WriteLine("The order will be displayed. Please enter any changes to that field. If none, just hit enter.");
-            Console.Write($"CustomerName:{ToBeEditedOrder.Order.CustomerName}: ");
-            newOrder.Order.CustomerName = Console.ReadLine();
+            newOrder.Order.CustomerName = console.GetNewEditedName(ToBeEditedOrder.Order.CustomerName);
 
-            Console.Write($"State: {ToBeEditedOrder.Order.State}: ");
-            newOrder.Order.State = Console.ReadLine();
+            newOrder.Order.State = console.GetNewEditedState(ToBeEditedOrder.Order.State);
 
-            Console.Write($"Product Type: {ToBeEditedOrder.Order.ProductType}");
-            newOrder.Order.ProductType = Console.ReadLine();
+            response = manager.CheckStateTax(newOrder.Order.State);
+                if (response.Success == false)
+                {
+                    Console.WriteLine(response.Message);
+                    return;
+
+                }
+
+
+            newOrder.Order.ProductType = console.GetNewEditedProduct(ToBeEditedOrder.Order.ProductType);
+
             ProductValidation = manager.IsValidProduct(newOrder.Order.ProductType);
 
             if(ProductValidation.Success != true)
@@ -51,12 +57,8 @@ namespace Flooring.UI.WorkFlows
                 return;
             }
 
-            Console.Write($"Area: {ToBeEditedOrder.Order.Area}: ");
-            newOrder.Order.Area = decimal.Parse(Console.ReadLine());
+            newOrder.Order.Area = console.GetNewEditedArea(ToBeEditedOrder.Order.Area);
 
-
-
-            //NewFieldsResponse = manager.Edit(editOrderResponse);
             newOrder = manager.Edit(newOrder.Order, ToBeEditedOrder.Order);
             if (newOrder.Success == true)
             {

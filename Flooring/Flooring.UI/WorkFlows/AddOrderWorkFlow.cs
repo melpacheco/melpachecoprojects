@@ -18,29 +18,21 @@ namespace Flooring.UI.WorkFlows
         {
             Console.Clear();
             OrderManager manager = OrderManagerFactory.Create();
-            
+            ConsoleIO console = new ConsoleIO();
             Order order = new Order();
             Response response = new Response();
 
-            do
-            {
-                Console.WriteLine("Enter a future order date: ");
-                order.OrderDate = Console.ReadLine();
-                response = manager.IsInFutureDate(order.OrderDate);
-            }
+            order.OrderDate = console.GetOrderDate();
 
-            while (response.Success != true);
+            order.CustomerName = console.AddCustomerName();
 
+            order.State = console.AddStateName();
 
-            Console.WriteLine("Enter the Customer Name here: ");
-            order.CustomerName = Console.ReadLine();
-
-            Console.WriteLine("Enter the State Here: ");
-            order.State = Console.ReadLine();
             response = manager.CheckStateTax(order.State);
             if (response.Success == false)
             {
-                Console.WriteLine($"We are unable to sell in {order.State} at this time. ");
+                Console.WriteLine(response.Message);
+                return;
                 
             }
             
@@ -59,9 +51,7 @@ namespace Flooring.UI.WorkFlows
 
             while (response.Success == false);
 
-
-            Console.WriteLine("Enter the Area Here: ");
-            order.Area = decimal.Parse(Console.ReadLine());
+            order.Area = console.AddArea();
 
            response = manager.AddOrder(order);
           

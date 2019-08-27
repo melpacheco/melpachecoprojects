@@ -13,18 +13,25 @@ namespace Flooring.UI.WorkFlows
         public void Execute()
         {
             OrderManager manager = OrderManagerFactory.Create();
-
+            Response response = new Response();
             Console.Clear();
             Console.WriteLine("Look up an order using the order date.");
             Console.WriteLine("____________________________________");
             Console.Write("Enter order date here: ");
             string orderDate = Console.ReadLine();
+            response = manager.ValidDate(orderDate);
+            if (response.Success == false)
+            {
+                Console.WriteLine(response.Message);
+                return;
+            }
+
             
             Console.Write("Enter order number here: ");
             string userNumber = Console.ReadLine();
             int.TryParse(userNumber, out int orderNumber);
 
-            Response response = new Response();
+            
 
                response =  manager.DisplayOrder( orderDate, orderNumber);
 
@@ -33,7 +40,6 @@ namespace Flooring.UI.WorkFlows
                 ConsoleIO.DisplayOrderInformation(response.Order);
             }
 
-            // maybe make order a field in the response?
             else
             {
                 Console.WriteLine(response.Message);

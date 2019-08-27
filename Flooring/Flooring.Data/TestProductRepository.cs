@@ -23,7 +23,7 @@ namespace Flooring.Data
 
         public Product LoadProduct(string ProductType)
         {
-            var ProductObject = ProductList().Where(p => p.ProductType == ProductType);
+            var ProductObject = ProductList().Where(p => p.ProductType.ToLower() == ProductType.ToLower());
 
             return ProductObject.FirstOrDefault();
         }
@@ -33,8 +33,5 @@ namespace Flooring.Data
             ProductList().Add(product);
         }
 
-    
-
-        // should inherit from product or IProduct? What should be in IProduct??? Same with tax?
     }
 }

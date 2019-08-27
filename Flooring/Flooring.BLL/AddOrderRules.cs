@@ -53,20 +53,6 @@ namespace Flooring.BLL
         }
 
 
-        public Order LoadOrder(string OrderNumber)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SaveOrder(Order order)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Order> LoadList()
-        {
-            throw new NotImplementedException();
-        }
 
     }
 }

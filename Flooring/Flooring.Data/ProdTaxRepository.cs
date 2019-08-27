@@ -48,7 +48,7 @@ namespace Flooring.Data
             newTaxList = TaxList();
             foreach (var x in newTaxList)
             {
-                if (x.StateName == StateName)
+                if (x.StateName.ToLower() == StateName.ToLower())
                 {
                     return x;
                 }

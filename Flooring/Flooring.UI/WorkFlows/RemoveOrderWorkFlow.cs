@@ -19,6 +19,12 @@ namespace Flooring.UI.WorkFlows
 
             Console.WriteLine("Enter order date: ");
             string orderDate = Console.ReadLine();
+            response = manager.ValidDate(orderDate);
+            if(response.Success == false)
+            {
+                Console.WriteLine(response.Message);
+                return;
+            }
 
             Console.WriteLine("Enter order number: ");
             string userNumber = Console.ReadLine();
