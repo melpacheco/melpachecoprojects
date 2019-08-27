@@ -37,6 +37,21 @@ namespace Flooring.UI
             return userEntry;
         }
 
+        public string GetFutureAddDate()
+        {
+            string userEntry = GetOrderDate();
+
+            DateTime.Parse(userEntry);
+
+            while ((DateTime.Parse(userEntry)) < DateTime.Now)
+            {
+                Console.WriteLine("Date must be in the future");
+                userEntry = GetOrderDate();
+            }
+
+            return userEntry;
+        }
+
         public int GetOrderNumber()
         {
             Console.Write("Enter order number: ");

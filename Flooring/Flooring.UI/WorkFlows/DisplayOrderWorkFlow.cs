@@ -14,11 +14,12 @@ namespace Flooring.UI.WorkFlows
         {
             OrderManager manager = OrderManagerFactory.Create();
             Response response = new Response();
+            ConsoleIO console = new ConsoleIO();
             Console.Clear();
             Console.WriteLine("Look up an order using the order date.");
             Console.WriteLine("____________________________________");
-            Console.Write("Enter order date here: ");
-            string orderDate = Console.ReadLine();
+            string orderDate = console.GetOrderDate();
+
             response = manager.ValidDate(orderDate);
             if (response.Success == false)
             {
@@ -26,12 +27,7 @@ namespace Flooring.UI.WorkFlows
                 return;
             }
 
-            
-            Console.Write("Enter order number here: ");
-            string userNumber = Console.ReadLine();
-            int.TryParse(userNumber, out int orderNumber);
-
-            
+            int orderNumber = console.GetOrderNumber();
 
                response =  manager.DisplayOrder( orderDate, orderNumber);
 

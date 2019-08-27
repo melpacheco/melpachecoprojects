@@ -15,10 +15,11 @@ namespace Flooring.UI.WorkFlows
         {
             Order orderToBeRemoved = new Order();
             Response response = new Response();
+            ConsoleIO console = new ConsoleIO();
             OrderManager manager = OrderManagerFactory.Create();
 
-            Console.WriteLine("Enter order date: ");
-            string orderDate = Console.ReadLine();
+            string orderDate = console.GetOrderDate();
+
             response = manager.ValidDate(orderDate);
             if(response.Success == false)
             {
@@ -26,9 +27,7 @@ namespace Flooring.UI.WorkFlows
                 return;
             }
 
-            Console.WriteLine("Enter order number: ");
-            string userNumber = Console.ReadLine();
-            int.TryParse(userNumber, out int orderNumber);
+            int orderNumber = console.GetOrderNumber();
 
             response = manager.LoadOrder(orderDate, orderNumber);
             if (response.Success != true)

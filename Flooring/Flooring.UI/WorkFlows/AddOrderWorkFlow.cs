@@ -22,8 +22,8 @@ namespace Flooring.UI.WorkFlows
             Order order = new Order();
             Response response = new Response();
 
-            order.OrderDate = console.GetOrderDate();
-
+            order.OrderDate = console.GetFutureAddDate();
+   
             order.CustomerName = console.AddCustomerName();
 
             order.State = console.AddStateName();

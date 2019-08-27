@@ -173,29 +173,6 @@ namespace Flooring.BLL
             }
         }
 
-        public Response IsInFutureDate(string orderDate)
-        {
-            Response response = new Response();
-            response = ValidDate(orderDate);
-
-
-            if (response.Success == false)
-            {
-                return response;
-            }
-
-            DateTime dateTime = DateTime.Parse(orderDate);
-
-            if (dateTime < DateTime.Today)
-            {
-                response.Success = false;
-                Console.WriteLine("Order Date must be in the future");
-                return response;
-            }
-
-            response.Success = true;
-            return response;
-        }
 
         public Response IsValidProduct(string ProductType)
         {
