@@ -12,14 +12,15 @@ namespace Flooring.UI
     {
         public static void DisplayOrderInformation(Order order)
         {
-            Console.WriteLine($"{order.OrderNumber}");
-            Console.WriteLine($"{order.CustomerName}");
-            Console.WriteLine($"{order.State}");
+            Console.Clear();
+            Console.WriteLine($"Order Number: {order.OrderNumber}");
+            Console.WriteLine($"Name: {order.CustomerName}");
+            Console.WriteLine($"State: {order.State}");
             Console.WriteLine($"Product: {order.ProductType}");
-            Console.WriteLine($"Materials: {order.MaterialCost}");
-            Console.WriteLine($"Labor: {order.LaborCost}");
-            Console.WriteLine($"Tax: {order.Tax}");
-            Console.WriteLine($"Total: {order.Total}");
+            Console.WriteLine($"Materials: {string.Format("{0:C}", order.MaterialCost)}");
+            Console.WriteLine($"Labor: {string.Format("{0:C}", order.LaborCost)}");
+            Console.WriteLine($"Tax: {string.Format("{0:C}", order.Tax)}");
+            Console.WriteLine($"Total: {string.Format("{0:C}", order.Total)}");
         }
 
         public string GetOrderDate()

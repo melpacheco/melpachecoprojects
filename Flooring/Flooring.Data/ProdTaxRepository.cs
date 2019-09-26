@@ -11,6 +11,12 @@ namespace Flooring.Data
 {
     public class ProdTaxRepository : ITaxRepository
     {
+        private string _path;
+
+        public ProdTaxRepository(string path)
+        {
+            _path = path;
+        }
 
         public List<Tax> TaxList()
         {

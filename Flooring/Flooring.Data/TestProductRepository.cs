@@ -11,6 +11,12 @@ namespace Flooring.Data
 {
    public class TestProductRepository : IProductRepository
     {
+        private string _path;
+
+        public TestProductRepository(string path)
+        {
+            _path = path;
+        }
 
         Product product = new Product();
         public List<Product> ProductList()

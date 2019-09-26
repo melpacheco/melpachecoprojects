@@ -11,6 +11,13 @@ namespace Flooring.Data
    public class TestTaxRepository : ITaxRepository
     {
 
+        private string _path;
+
+        public TestTaxRepository (string path)
+        {
+            _path = path;
+        }
+
 
         public List<Tax> TaxList()
         {

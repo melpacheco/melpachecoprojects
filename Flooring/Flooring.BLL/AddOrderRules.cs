@@ -27,7 +27,7 @@ namespace Flooring.BLL
                 return response;
             }
 
-            if (order.Area <= 100)
+            if (order.Area < 100)
             {
                 response.Success = false;
                 response.Message = "Area must be at least 100 square feet";
