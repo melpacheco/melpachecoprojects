@@ -28,7 +28,6 @@ $(document).ready(function () {
         var amount = GetValueInTotalInBox();
         var id = Number($("#itemSelection").val());
         vendItem(amount, id);
-        $("#totalInBox").val("");
         loadInventory();
     });
 
@@ -98,7 +97,7 @@ function loadInventory(){
 }
 
 function clearCardDeck(){
-    $(".card-deck").empty();
+    $("#card-deck").empty();
 }
 
 function GetValueInTotalInBox(){
@@ -131,6 +130,8 @@ function vendItem(amount, id){
             var nickels = index.nickels;
 
             changeReturned(quarters, dimes, nickels);
+
+            $("#totalInBox").val("");
         },
         error: function(data){
          $("#messages").val((data.responseJSON.message));
