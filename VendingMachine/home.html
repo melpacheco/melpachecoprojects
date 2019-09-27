@@ -5,25 +5,44 @@
 
 <style>
 
+   hr {
+       border:1px solid black;
+   } 
 .card{
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     padding: 16px;
     text-align: center;
     background-color: #f1f1f1;
+    border:1px solid darkgray;
 }
 
 .column {
     float:left;
     width: 33%;
-    padding: 0 10px;
+    padding: 10px 10px;
 }
 
-.form-group{
+.card-header{
+    text-align: left;
+}
+
+form{
     text-align: center;
 }
 
-.form-row{
-    text-align: center;
+#changeReturned{
+ margin: 0 auto;
+ width: 60%;
+}
+
+#messages{
+    margin: 0 auto;
+    width: 60%;
+}
+
+#totalInBox{
+    margin: 0 auto;
+    width: 20%
 }
 
 
@@ -36,7 +55,7 @@
         <hr>
      <div class= "row" id="cardRows">
          <div class="col-md-8">
-            <div class="card-deck" id="card-deck">
+            <div class="row card-columns" id="card-deck">
                 
             </div>
          </div>
@@ -44,8 +63,9 @@
             <form>
                 <div class="form-group">
                     <label for="totalInBox">Total $ In</label>
-                    <input type="output" width:2 class="form-control" id="totalInBox" READONLY/>
+                  <input type="output" class="form-control" id="totalInBox" READONLY/>
                 </div>
+                
                 <div class="form-group row">
                  <button type="button"
                  id="addDollar"
@@ -77,7 +97,7 @@
                     <br>
                     <div class="form-inline">
                     <label for="items">Item: </label>
-                    <input type="output" class="form-control" id="itemSelection" READONLY/>
+                    <input type="output" class="form-control" id="itemSelection" style="width: 15%" READONLY/>
                     </div>
                 </div>
                 <div class="form-row">
@@ -99,6 +119,7 @@
                     Change Return
                     </button>
                 </div>
+                
             </form>
          </div>
      </div>

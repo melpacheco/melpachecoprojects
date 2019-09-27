@@ -36,7 +36,7 @@ $(document).ready(function () {
 
 function loadInventory(){
     clearCardDeck();
-    var cards = $(".card-deck");
+    var cards = $("#card-deck");
     $.ajax({
         type: "GET",
         url: "http://localhost:8080/items",
