@@ -11,29 +11,33 @@ namespace Flooring.Data
 {
    public class TestProductRepository : IProductRepository
     {
+        private string _path;
+
+        public TestProductRepository(string path)
+        {
+            _path = path;
+        }
 
         Product product = new Product();
-        public static List<Product> productList = new List<Product>()
-        {
-          new Product{ ProductType = "Tile", CostPerSquareFoot = 3.50M, LaborCostPerSquareFoot = 4.15M}
-      
+        public List<Product> ProductList()
+        { List<Product> ProductList = new List<Product>();
 
-        };
+            ProductList.Add(new Product { ProductType = "Tile", CostPerSquareFoot = 3.50M, LaborCostPerSquareFoot = 4.15M });
+
+            return ProductList;
+        }
 
         public Product LoadProduct(string ProductType)
         {
-            var ProductObject = productList.Where(p => p.ProductType == ProductType);
+            var ProductObject = ProductList().Where(p => p.ProductType.ToLower() == ProductType.ToLower());
 
             return ProductObject.FirstOrDefault();
         }
 
-        public void SaveList(Product product)
+        public void SaveNewProduct(Product product)
         {
-            productList.Add(product);
+            ProductList().Add(product);
         }
 
-    
-
-        // should inherit from product or IProduct? What should be in IProduct??? Same with tax?
     }
 }

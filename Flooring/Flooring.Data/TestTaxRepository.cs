@@ -11,23 +11,42 @@ namespace Flooring.Data
    public class TestTaxRepository : ITaxRepository
     {
 
+        private string _path;
 
-        public static List<Tax> taxList = new List<Tax>
+        public TestTaxRepository (string path)
         {
-            new Tax {StateName = "Ohio", StateAbbreviation = "OH", TaxRate = 6.25M}
-        };
+            _path = path;
+        }
+
+
+        public List<Tax> TaxList()
+        {
+            List<Tax> TaxList = new List<Tax>();
+
+            TaxList.Add(new Tax { StateName = "Ohio", StateAbbreviation = "OH", TaxRate = 6.25M });
+
+            return TaxList;
+        }
 
         public Tax LoadTaxObject(string StateName)
         {
-         
-            var TaxObject = taxList.Where(p => p.StateName == StateName);
 
-            return TaxObject.FirstOrDefault();
+            List<Tax> newTaxList = new List<Tax>();
+            newTaxList = TaxList();
+            foreach (var x in newTaxList)
+            {
+                if (x.StateName.ToLower() == StateName.ToLower())
+                {
+                    return x;
+                }
+
+            }
+            return null;
         }
 
-        public void SaveTax(Tax tax)
+        public void SaveNewTax(Tax tax)
         {
-            taxList.Add(tax);
+            TaxList().Add(tax);
         }
     }
 }

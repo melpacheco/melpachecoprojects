@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<head>
+    <title>Vending Machine</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+<style>
+
+   hr {
+       border:1px solid black;
+   } 
+.card{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    padding: 16px;
+    text-align: center;
+    background-color: #f1f1f1;
+    border:1px solid darkgray;
+}
+
+.column {
+    float:left;
+    width: 33%;
+    padding: 10px 10px;
+}
+
+.card-header{
+    text-align: left;
+}
+
+form{
+    text-align: center;
+}
+
+#changeReturned{
+ margin: 0 auto;
+ width: 60%;
+}
+
+#messages{
+    margin: 0 auto;
+    width: 60%;
+}
+
+#totalInBox{
+    margin: 0 auto;
+    width: 20%
+}
+
+
+</style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 align="center">Vending Machine</h1>
+        <hr>
+     <div class= "row" id="cardRows">
+         <div class="col-md-8">
+            <div class="row card-columns" id="card-deck">
+                
+            </div>
+         </div>
+         <div class="col-md-4">
+            <form>
+                <div class="form-group">
+                    <label for="totalInBox">Total $ In</label>
+                  <input type="output" class="form-control" id="totalInBox" READONLY/>
+                </div>
+                
+                <div class="form-group row">
+                 <button type="button"
+                 id="addDollar"
+                 class="btn-default">
+                Add Dollar
+                </button>  
+                <button type="button"
+                id="addQuarter"
+                class="btn-default">
+                Add Quarter
+                </button>
+                </div>
+                <div class="form-group row">
+                <button type="button"
+                id="addDime"
+                class="btn-default">
+                Add Dime
+                </button>
+                <button type="button"
+                id="addNickel"
+                class="btn-default">
+                Add Nickel
+                </button>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label for="messages">Messages</label>
+                    <input type="output" class="form-control" id="messages" READONLY/>
+                    <br>
+                    <div class="form-inline">
+                    <label for="items">Item: </label>
+                    <input type="output" class="form-control" id="itemSelection" style="width: 15%" READONLY/>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <button type="button"
+                    id="makePurchase"
+                    class="btn-default">
+                    Make Purchase
+                    </button>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label for="change">Change</label>
+                    <input type="output" class="form-control" id="changeReturned" READONLY/>
+                </div>
+                <div class="form-row">
+                    <button type="button"
+                    id="changeReturn"
+                    class="btn-default">
+                    Change Return
+                    </button>
+                </div>
+                
+            </form>
+         </div>
+     </div>
+ </div>
+    
+    <script src="js/jquery-3.0.0.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/home.js"></script>
+    </body>
+</html>

@@ -18,54 +18,56 @@ namespace Flooring.UI.WorkFlows
         {
             Console.Clear();
             OrderManager manager = OrderManagerFactory.Create();
-            
+            ConsoleIO console = new ConsoleIO();
             Order order = new Order();
-           
+            Response response = new Response();
 
-            Console.WriteLine("Enter the Order Date Here: ");
-            order.OrderNumber = Console.ReadLine();
+            order.OrderDate = console.GetFutureAddDate();
+   
+            order.CustomerName = console.AddCustomerName();
+
+            order.State = console.AddStateName();
+
+            response = manager.CheckStateTax(order.State);
+            if (response.Success == false)
+            {
+                Console.WriteLine(response.Message);
+                return;
+                
+            }
             
-
-            Console.WriteLine("Enter the Customer Name here: ");
-            order.CustomerName = Console.ReadLine();
-
-            Console.WriteLine("Enter the State Here: ");
-            order.State = Console.ReadLine();
 
             Console.WriteLine("The following are the available types of material: ");
-            foreach (var p in manager.GetProductList())
+            foreach (var p in manager.ProductAvailability())
             {
                 Console.WriteLine($"{p.ProductType}");
             }
-            
-            Console.WriteLine("Enter the Product here: ");
-            order.ProductType = Console.ReadLine();
+            do
+            {
+                Console.WriteLine("Enter the Product here: ");
+                order.ProductType = Console.ReadLine();
+                response = manager.IsValidProduct(order.ProductType);
+            }
 
+            while (response.Success == false);
 
-            Console.WriteLine("Enter the Area Here: ");
-            order.Area = Decimal.Parse(Console.ReadLine());
+            order.Area = console.AddArea();
 
-            AddOrderResponse response = manager.AddOrder(order);
+           response = manager.AddOrder(order);
+          
 
             if (response.Success == true)
             {
-
-                //save order
-                Console.WriteLine("Please verify the following information.");
-                Console.WriteLine($"Order Date: { response.OrderDate}");
-                Console.WriteLine($"Order Number: {response.OrderNumber}");
-                Console.WriteLine($"Customer Name: {response.CustomerName}");
-                Console.WriteLine($"State: {response.State}");
-                Console.WriteLine($"Product:{response.ProductType}");
-                Console.WriteLine($"Materials:{response.MaterialCost}");
-                Console.WriteLine($"Labor:{response.LaborCost}");
-                Console.WriteLine($"Tax:{response.Tax}");
-                Console.WriteLine($"Total:{response.Total}");
+              
+                ConsoleIO.DisplayOrderInformation(response.Order);
+                Console.WriteLine("Enter 1 to save this order, 2 to cancel order and return to menu: ");
                 string okayToSave = Console.ReadLine();
-                switch (okayToSave)
+
+                   switch (okayToSave)
                 {
                     case "1":
-                        manager.SaveOrder(order);
+
+                        manager.SaveOrder(response.Order);
                         break;
                     case "2":
                         break;

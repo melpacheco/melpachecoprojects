@@ -13,22 +13,32 @@ namespace Flooring.UI.WorkFlows
         public void Execute()
         {
             OrderManager manager = OrderManagerFactory.Create();
-
+            Response response = new Response();
+            ConsoleIO console = new ConsoleIO();
             Console.Clear();
             Console.WriteLine("Look up an order using the order date.");
             Console.WriteLine("____________________________________");
-            Console.WriteLine("Enter order date here: ");
-            string orderDate = Console.ReadLine();
+            string orderDate = console.GetOrderDate();
 
-            DisplayOrderResponse response = manager.DisplayOrder(orderDate);
+            response = manager.ValidDate(orderDate);
+            if (response.Success == false)
+            {
+                Console.WriteLine(response.Message);
+                return;
+            }
+
+            int orderNumber = console.GetOrderNumber();
+
+               response =  manager.DisplayOrder( orderDate, orderNumber);
 
             if (response.Success)
             {
-                ConsoleIO.DisplayOrderInformation(response.OrderDate);
+                ConsoleIO.DisplayOrderInformation(response.Order);
             }
+
             else
             {
-                Console.WriteLine("That order does not exist");
+                Console.WriteLine(response.Message);
             }
         }
     }

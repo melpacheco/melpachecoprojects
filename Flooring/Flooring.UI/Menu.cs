@@ -38,14 +38,20 @@ namespace Flooring.UI
                         Console.ReadLine();
                         break;
                     case "3":
-                        //EditOrder
+                        EditOrderWorkFlow editOrderWorkFlow = new EditOrderWorkFlow();
+                        editOrderWorkFlow.Execute();
+                        Console.ReadLine();
                         break;
                     case "4":
-                        // remove an order
+                        RemoveOrderWorkFlow removeOrderWorkFlow = new RemoveOrderWorkFlow();
+                        removeOrderWorkFlow.Execute();
+                        Console.ReadLine();
                         break;
                     case "Q":
                         return;
                     default:
+                        Console.Write("That is not a valid entry.");
+                        Console.ReadLine();
                         break;
                 }
             }
