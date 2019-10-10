@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -8,13 +9,38 @@ using Exercises.Models.Data;
 
 namespace Exercises.Models.ViewModels
 {
-    public class StudentVM
+    public class StudentVM : IValidatableObject
     {
         public Student Student { get; set; }
         public List<SelectListItem> CourseItems { get; set; }
         public List<SelectListItem> MajorItems { get; set; }
         public List<SelectListItem> StateItems { get; set; }
         public List<int> SelectedCourseIds { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            List<ValidationResult> errors = new List<ValidationResult>();
+
+            if (string.IsNullOrEmpty(Student.FirstName))
+            {
+                errors.Add(new ValidationResult("Please enter first name.",
+                    new[] { "Student.FirstName" }));
+            }
+
+            if (string.IsNullOrEmpty(Student.LastName))
+            {
+                errors.Add(new ValidationResult("Please enter last name.",
+                    new[] { "Student.LastName" }));
+            }
+
+            if (Student.GPA < 0)
+            {
+                errors.Add(new ValidationResult("GPA must not be negative.",
+                    new[] { "Student.GPA" }));
+            }
+
+            return errors;
+        }
 
         public StudentVM()
         {

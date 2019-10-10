@@ -1,0 +1,88 @@
+﻿@model Exercises.Models.ViewModels.StudentVM
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="row">
+    <div class="col-xs-12 col-sm-3">
+        @Html.Partial("StudentNav")
+    </div>
+    <div class="col-md-9">
+        <div class="row">
+            <div class="col-md-9">
+                <h3>Edit Student</h3>
+       
+                    @using (Html.BeginForm())
+                    {
+                        @Html.HiddenFor(m => m.Student.StudentId)
+                        <div class="col-lg-12">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">Personal Details</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>First Name:</label>
+                                                @Html.TextBoxFor(m => m.Student.FirstName, new { @class = "form-control", placeholder = "First Name" })
+                                                <span class="text-danger">@Html.ValidationMessageFor(m => m.Student.FirstName)</span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Last Name:</label>
+                                                @Html.TextBoxFor(m => m.Student.LastName, new { @class = "form-control", placeholder = "Last Name" })
+                                                <span class="text-danger">@Html.ValidationMessageFor(m => m.Student.LastName)</span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Major:</label>
+                                                @Html.DropDownListFor(m => m.Student.Major.MajorId, Model.MajorItems, new { @class = "form-control" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label>GPA:</label>
+                                                @Html.TextBoxFor(m => m.Student.GPA, new { @class = "form-control", placeholder = "GPA" })
+                                                <span class="text-danger">@Html.ValidationMessageFor(m => m.Student.GPA)</span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Courses</label>
+                                                @Html.ListBoxFor(m => m.Student.Courses, (Model.CourseItems), new { @class = "form-control", MultiSelectList = "multiple" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.HiddenFor(m => m.Student.Address.AddressId)
+                                                <label>Street1:</label>
+                                                @Html.TextBoxFor(m => m.Student.Address.Street1, new { @class = "form-control", placeholder = "Student.Address.Street1" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Street2:</label>
+                                                @Html.TextBoxFor(m => m.Student.Address.Street2, new { @class = "form-control", placeholder = "Student.Address.Street2" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label>City:</label>
+                                                @Html.TextBoxFor(m => m.Student.Address.City, new { @class = "form-control", placeholder = "Student.Address.City" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label>State:</label>
+                                                @Html.TextBoxFor(m => m.Student.Address.State.StateName, new { @class = "form-control", placeholder = "Student.Address.State.StateName" })
+                                                @Html.TextBoxFor(m => m.Student.Address.State.StateAbbreviation, new { @class = "form-control", placeholder = "Student.Address.State.StateAbbreviation" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Postal Code:</label>
+                                                @Html.TextBoxFor(m => m.Student.Address.PostalCode, new { @class = "form-control", placeholder = "Student.Address.PostalCode" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <button class="btn btn-primary">Save</button>
+                                    @Html.ActionLink("Cancel", "List", "Student", null, new { @class = "btn btn-sm btn-info" })
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                
+            </div>
+        </div>
+    </div>
+</div>
