@@ -66,6 +66,7 @@ namespace Exercises.Controllers
 
             var studentVM = StudentRepository.Get(id);
 
+
             model.Student.Major = new Major();
 
             model.Student.FirstName = studentVM.FirstName;
@@ -77,13 +78,23 @@ namespace Exercises.Controllers
             model.SetCourseItems(CourseRepository.GetAll());
             model.SetMajorItems(MajorRepository.GetAll());
 
-            model.Student.Address = new Address();
-            model.Student.Address.AddressId = studentVM.Address.AddressId;
-            model.Student.Address.Street1 = studentVM.Address.Street1;
-            model.Student.Address.Street2 = studentVM.Address.Street2;
-            model.Student.Address.City = studentVM.Address.City;
-            model.Student.Address.State = studentVM.Address.State;
-            model.Student.Address.PostalCode = studentVM.Address.PostalCode;
+            if (studentVM.Address == null)
+            {
+                model.Student.Address = new Address();
+                model.Student.Address.AddressId = 1;
+            }
+
+            else
+            {
+                model.Student.Address = new Address();
+                model.Student.Address.AddressId = studentVM.Address.AddressId;
+                model.Student.Address.Street1 = studentVM.Address.Street1;
+                model.Student.Address.Street2 = studentVM.Address.Street2;
+                model.Student.Address.City = studentVM.Address.City;
+                model.Student.Address.State = studentVM.Address.State;
+                model.Student.Address.PostalCode = studentVM.Address.PostalCode;
+            }
+
 
 
             return View(model);
@@ -103,7 +114,7 @@ namespace Exercises.Controllers
             student.Student.GPA = model.Student.GPA;
 
             student.Student.Major = MajorRepository.Get(model.Student.Major.MajorId);
-            
+
 
             student.Student.Address = new Address();
             student.Student.Address.AddressId = model.Student.Address.AddressId;
@@ -113,11 +124,9 @@ namespace Exercises.Controllers
             student.Student.Address.State = model.Student.Address.State;
             student.Student.Address.PostalCode = model.Student.Address.PostalCode;
 
-            
-
             if (ModelState.IsValid)
             {
-                StudentRepository.SaveAddress(student.Student.Address.AddressId, student.Student.Address);
+                StudentRepository.SaveAddress(student.Student.StudentId, student.Student.Address);
                 StudentRepository.Edit(student.Student);
                 return RedirectToAction("List");
             }

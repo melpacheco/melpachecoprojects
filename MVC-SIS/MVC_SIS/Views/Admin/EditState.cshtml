@@ -13,6 +13,7 @@
     <div class="col-xs-12">
         @using (Html.BeginForm())
         {
+            @Html.ValidationSummary(false)
             @Html.HiddenFor(m => m.StateAbbreviation)
         <div class="form-group">
             <label>State Name</label>

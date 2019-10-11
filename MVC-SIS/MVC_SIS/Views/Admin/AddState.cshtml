@@ -13,7 +13,7 @@
     <div class="col-xs-12">
         @using (Html.BeginForm())
         {
-            
+           @Html.ValidationSummary(false) 
         <div class="form-group">
             <label>State Name</label>
             @Html.TextBoxFor(m => m.StateName, new { @class = "form-control", placeholder = "State Name" })

@@ -6,21 +6,10 @@ using System.Web;
 
 namespace Exercises.Models.Data
 {
-    public class Course /*: IValidatableObject*/
+    public class Course 
     {
         public int CourseId { get; set; }
         public string CourseName { get; set; }
 
-        //public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        //{
-        //    List<ValidationResult> errors = new List<ValidationResult>();
-
-        //    if (string.IsNullOrEmpty(CourseName))
-        //    {
-        //        errors.Add(new ValidationResult("Please enter course name.",
-        //            new[] { "CourseName" }));
-        //    }
-        //    return errors;
-        //}
     }
 }

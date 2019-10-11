@@ -2,6 +2,7 @@
 using Exercises.Models.Repositories;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -28,17 +29,16 @@ namespace Exercises.Controllers
         [HttpPost]
         public ActionResult AddMajor(Major major)
         {
-            if (ModelState.IsValid)
+            if (string.IsNullOrEmpty(major.MajorName))
+            {
+                ModelState.AddModelError("", "Major name is a required field.");
+                return View("AddMajor", major);
+            }
+            else
             {
                 MajorRepository.Add(major.MajorName);
                 return RedirectToAction("Majors");
             }
-
-            else
-            {
-                return View("AddMajor", major);
-            }
-
         }
 
         [HttpGet]
@@ -51,17 +51,18 @@ namespace Exercises.Controllers
         [HttpPost]
         public ActionResult EditMajor(Major major)
         {
-            if (ModelState.IsValid)
+
+            if (string.IsNullOrEmpty(major.MajorName))
             {
+                ModelState.AddModelError("", "Major name is a required field.");
+                return View("EditMajor", major);
+            }
+            else
+            {
+
                 MajorRepository.Edit(major);
                 return RedirectToAction("Majors");
             }
-
-            else
-            {
-                return View("EditMajor", major);
-            }
-
         }
 
         [HttpGet]
@@ -94,16 +95,22 @@ namespace Exercises.Controllers
         [HttpPost]
         public ActionResult AddState(State state)
         {
-            if (ModelState.IsValid)
-
+            if (string.IsNullOrEmpty(state.StateAbbreviation))
             {
-                StateRepository.Add(state);
-                return RedirectToAction("States");
+                ModelState.AddModelError("", "You must enter state abbreviation.");
+
+                if (string.IsNullOrEmpty(state.StateName))
+                {
+                    ModelState.AddModelError("", "You must enter state name.");
+                }
+
+                return View("AddState", state);
             }
 
             else
             {
-                return View("AddState", state);
+                StateRepository.Add(state);
+                return RedirectToAction("States");
             }
 
         }
@@ -119,13 +126,18 @@ namespace Exercises.Controllers
         [HttpPost]
         public ActionResult EditState(State state)
         {
-            if (ModelState.IsValid)
+            if (string.IsNullOrEmpty(state.StateName))
+            {
+                ModelState.AddModelError("", "Must enter state name.");
+                return View("EditState", state);
+            }
+
+            else
             {
                 StateRepository.Edit(state);
                 return RedirectToAction("States");
             }
 
-            return View("EditState", state);
         }
 
         [HttpGet]
@@ -161,14 +173,15 @@ namespace Exercises.Controllers
         [HttpPost]
         public ActionResult AddCourse(Course course)
         {
-            if (ModelState.IsValid)
+            if (string.IsNullOrEmpty(course.CourseName))
             {
-                CourseRepository.Add(course.CourseName);
-                return RedirectToAction("Courses");
+                ModelState.AddModelError("", "You must enter course name.");
+                return View("AddCourse", course);
             }
             else
             {
-                return View("AddCourse", course);
+                CourseRepository.Add(course.CourseName);
+                return RedirectToAction("Courses");
             }
 
         }
@@ -183,14 +196,16 @@ namespace Exercises.Controllers
         [HttpPost]
         public ActionResult EditCourse(Course course)
         {
-            if (ModelState.IsValid)
+            if (string.IsNullOrEmpty(course.CourseName))
             {
-                CourseRepository.Edit(course);
-                return RedirectToAction("Courses");
+                ModelState.AddModelError("", "You must enter course name");
+                return View("EditCourse", course);
+
             }
             else
             {
-                return View("EditCourse", course);
+                CourseRepository.Edit(course);
+                return RedirectToAction("Courses");
             }
 
         }
@@ -208,8 +223,6 @@ namespace Exercises.Controllers
             CourseRepository.Delete(course.CourseId);
             return RedirectToAction("Courses");
         }
-
-
 
     }
 }
